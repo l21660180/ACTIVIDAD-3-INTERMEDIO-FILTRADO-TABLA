@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtrado de Tabla</title>
+    <style>
+        /* Estilos generales para el cuerpo */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        /* Estilo para el título principal */
+        h2 {
+            text-align: center;
+            color: #1e3a8a;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo para el contenedor de la tabla */
+        .table-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        /* Ajuste para que el input no se salga del contenedor */
+        input {
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            width: 100%;
+            border: 2px solid #1e3a8a;
+            border-radius: 6px;
+            box-sizing: border-box; /* Incluye el padding y borde dentro del ancho total */
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        /* Cambio de color cuando el input está activo */
+        input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: inset 0 3px 6px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Estilo general para la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Encabezado de la tabla */
+        th {
+            background-color: #2563eb;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 12px 15px;
+        }
+
+        /* Estilo para las celdas */
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        /* Alterna el color de fondo de las filas pares */
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        /* Transición suave en las filas al pasar el ratón */
+        tr {
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        /* Color de fondo al hacer hover sobre una fila */
+        tr:hover {
+            background-color: #e0f2fe;
+        }
+
+        /* Efecto hover para los encabezados de tabla */
+        th:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Estilos responsivos: ajusta el tamaño del contenido para pantallas pequeñas */
+        @media (max-width: 768px) {
+            th, td {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            input {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h2>Tabla con Filtrado Dinámico</h2>
+
+<!-- Contenedor para la tabla y el campo de filtrado -->
+<div class="table-container">
+    <!-- Campo de texto para filtrar la tabla -->
+    <input type="text" id="filtro" placeholder="Escribe para filtrar...">
+
+    <!-- Tabla con los datos a filtrar -->
+    <table>
+        <thead>
+            <tr>
+                <!-- Encabezados de la tabla -->
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Ciudad</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-datos">
+            <!-- Fila de datos 1 -->
+            <tr>
+                <td>Ana</td>
+                <td>22</td>
+                <td>Madrid</td>
+            </tr>
+            <!-- Fila de datos 2 -->
+            <tr>
+                <td>Juan</td>
+                <td>30</td>
+                <td>Barcelona</td>
+            </tr>
+            <!-- Fila de datos 3 -->
+            <tr>
+                <td>Lucía</td>
+                <td>25</td>
+                <td>Valencia</td>
+            </tr>
+            <!-- Fila de datos 4 -->
+            <tr>
+                <td>Carlos</td>
+                <td>28</td>
+                <td>Sevilla</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    /*
+        Filtrado dinámico:
+        Cada vez que el usuario escribe en el campo de texto, esta función filtra las filas de la tabla.
+    */
+    document.getElementById('filtro').addEventListener('keyup', function() {
+        // Toma el valor del input y lo convierte a minúsculas para una comparación sin distinción de mayúsculas/minúsculas
+        let filtro = this.value.toLowerCase();
+        // Selecciona todas las filas dentro del cuerpo de la tabla
+        let filas = document.querySelectorAll('#tabla-datos tr');
+
+        // Itera sobre cada fila
+        filas.forEach(function(fila) {
+            // Convierte el texto de la fila a minúsculas para compararlo con el filtro
+            let textoFila = fila.textContent.toLowerCase();
+            // Si el texto de la fila incluye el filtro, la fila se muestra
+            if (textoFila.includes(filtro)) {
+                fila.style.display = ''; // Muestra la fila
+            } else {
+                // Si no coincide, la fila se oculta
+                fila.style.display = 'none'; // Oculta la fila
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
